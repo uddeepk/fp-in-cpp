@@ -13,6 +13,23 @@ bool is_female(const Person &p);
 bool is_not_female(const Person &p);
 string name(const Person &p);
 
+template <typename FilterFunction>
+vector <string> names_for ( const vector<Person> &v, FilterFunction filter) {
+
+    vector <Person> chosenPeople;
+
+    std::copy_if(v.cbegin(), v.cend(), std::back_inserter(chosenPeople),
+                 filter);
+
+    vector <string> names(chosenPeople.size());
+
+    std::transform(chosenPeople.cbegin(), chosenPeople.cend(),
+                   names.begin(),
+                   name);
+    return names;
+
+}
+
 void print (const vector <Person> &v);
 void print (const vector <string> &v);
 
@@ -30,7 +47,12 @@ int main() {
 
     std::cout << "\nFemales filetered\n";
     print(vecFemaleNames);
+
+    std::cout << "\nUsing template for function\n";
+    auto vecMales = names_for(people, is_not_female);
+    print(vecMales);
     return 0;
+
 }
 
 vector <Person> vecPeople() {
