@@ -24,6 +24,7 @@ int main() {
     // get female
     auto vecFemaleNames = getFemale(people);
 
+    std::cout << "\nFemales filetered";
     print(vecFemaleNames);
     return 0;
 }
