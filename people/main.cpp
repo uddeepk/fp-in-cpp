@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <ranges>
 #include "Person.hpp"
 
 using std::vector;
@@ -8,6 +9,9 @@ using std::string;
 
 vector <Person> vecPeople () ;
 vector <string> getFemale (vector <Person> v);
+bool is_female(const Person &p);
+bool is_not_female(const Person &p);
+string name(const Person &p);
 
 void print (const vector <Person> &v);
 void print (const vector <string> &v);
@@ -24,7 +28,7 @@ int main() {
     // get female
     auto vecFemaleNames = getFemale(people);
 
-    std::cout << "\nFemales filetered";
+    std::cout << "\nFemales filetered\n";
     print(vecFemaleNames);
     return 0;
 }
@@ -47,7 +51,9 @@ vector <Person> vecPeople() {
     return v;
 }
 
+
 vector<string> getFemale(vector<Person> v) {
+    /*
     // Filter female
     auto it = std::partition(std::begin(v), std::end(v), [](Person p) {
         return p.getGender() == "female";
@@ -60,6 +66,31 @@ vector<string> getFemale(vector<Person> v) {
         return p.getName();
     });
     return vecNames;
+    */
+
+    /* // other version
+    v.erase(
+            std::remove_if(v.begin(), v.end(), is_not_female),
+            v.end()
+            );
+    vector <string > names(v.size()) ;
+
+    std::transform(v.begin(), v.end(), names.begin(), name);
+    return names;
+     */
+
+    vector <Person> females;
+
+    std::copy_if(v.cbegin(), v.cend(), std::back_inserter(females),
+                 is_female);
+
+    vector <string> names(females.size());
+
+    std::transform(females.cbegin(), females.cend(),
+                   names.begin(),
+                   name);
+    return names;
+
 }
 
 void print(const vector<Person> &v) {
@@ -72,4 +103,16 @@ void print(const vector<string> &v) {
     for ( const auto &x : v) {
         std::cout << x << "\n";
     }
+}
+
+bool is_not_female(const Person &p) {
+    return !is_female(p);
+}
+
+bool is_female(const Person &p) {
+    return p.getGender() == "female";
+}
+
+string name(const Person &p) {
+    return p.getName();
 }
