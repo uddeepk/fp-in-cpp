@@ -4,11 +4,14 @@
 
 #ifndef PEOPLE_PERSON_HPP
 #define PEOPLE_PERSON_HPP
-#include <string>
+
+//#include <string>
+#include <iostream>
 
 class Person {
 public:
     // Constructor
+    Person();
     Person(const std::string& name, const std::string& gender);
 
     //Dtor

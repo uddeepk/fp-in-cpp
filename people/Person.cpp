@@ -5,7 +5,11 @@
 #include "Person.hpp"
 #include <iostream>
 
-Person::Person(const std::string& name, const std::string& gender): _name(name), _gender(_gender) {
+Person::Person():_name(""), _gender("") {
+    std::cout << "Blank Person Created\n";
+}
+
+Person::Person(const std::string& name, const std::string& gender): _name(name), _gender(gender) {
     std::cout << "Person with " << _name << "and gender " << _gender << " created! \n";
 }
 
