@@ -79,6 +79,7 @@ vector<string> getFemale(vector<Person> v) {
     return names;
      */
 
+
     vector <Person> females;
 
     std::copy_if(v.cbegin(), v.cend(), std::back_inserter(females),
@@ -91,6 +92,8 @@ vector<string> getFemale(vector<Person> v) {
                    name);
     return names;
 
+
+    //return v | std::ranges::views::filter( is_female) | std::ranges::views::transform(name);
 }
 
 void print(const vector<Person> &v) {
