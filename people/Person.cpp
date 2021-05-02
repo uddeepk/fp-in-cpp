@@ -3,9 +3,10 @@
 //
 
 #include "Person.hpp"
+#include <iostream>
 
 Person::Person(const std::string& name, const std::string& gender): _name(name), _gender(_gender) {
-
+    std::cout << "Person with " << _name << "and gender " << _gender << " created! \n";
 }
 
 void Person::setName(const std::string &newName) {
@@ -22,4 +23,9 @@ void Person::setGender(const std::string &newGender) {
 
 std::string Person::getGender() const {
     return _gender;
+}
+
+Person::~Person() {
+    std::cout << "Person with " << _name << "and gender " << _gender << " destroyed! \n";
+
 }

@@ -11,6 +11,8 @@ public:
     // Constructor
     Person(const std::string& name, const std::string& gender);
 
+    //Dtor
+    ~Person();
     // Getters and Setters
     void setName(const std::string &newName);
     std::string getName () const;
