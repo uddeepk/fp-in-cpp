@@ -1,11 +1,16 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "Person.hpp"
 
 using std::vector;
 using std::string;
 
 vector <Person> vecPeople () ;
+vector <string> getFemale (vector <Person> v);
+
+void print (const vector <Person> &v);
+void print (const vector <string> &v);
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -14,6 +19,12 @@ int main() {
 //    vector <Person> people ;
     //Person p1 {"ss", "gg"};
     auto people = vecPeople();
+    print (people);
+
+    // get female
+    auto vecFemaleNames = getFemale(people);
+
+    print(vecFemaleNames);
     return 0;
 }
 
@@ -33,4 +44,31 @@ vector <Person> vecPeople() {
     }
 
     return v;
+}
+
+vector<string> getFemale(vector<Person> v) {
+    // Filter female
+    auto it = std::partition(std::begin(v), std::end(v), [](Person p) {
+        return p.getGender() == "female";
+    });
+    v.erase(it, v.end());
+    // Transform to names
+    vector <string> vecNames;// (v.size());
+
+    std::transform(std::begin(v), std::end(v), std::back_inserter(vecNames), [] (Person p) {
+        return p.getName();
+    });
+    return vecNames;
+}
+
+void print(const vector<Person> &v) {
+    for( const auto &x : v) {
+        std::cout << x.getName() << " " << x.getGender() << "\n";
+    }
+}
+
+void print(const vector<string> &v) {
+    for ( const auto &x : v) {
+        std::cout << x << "\n";
+    }
 }
