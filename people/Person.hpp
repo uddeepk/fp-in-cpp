@@ -13,6 +13,7 @@ public:
     // Constructor
     Person();
     Person(const std::string& name, const std::string& gender);
+    Person(const Person &p);
 
     //Dtor
     ~Person();
