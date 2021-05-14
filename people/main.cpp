@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <ranges>
+#include <numeric>
 #include "Person.hpp"
 
 using std::vector;
@@ -86,6 +87,34 @@ std::vector <std::string> names_for_tail (
     return names_for_helper(people_begin, people_end, filter, {});
 }
 
+//template <typename FilterFunction>
+//std::vector<std::string> append_name_if (
+//        std::vector<std::string> previously_collected,
+//        const Person &person)
+//{
+//    if (filter (person)) {
+//        previously_collected.push_back(name(person));
+//    }
+//    return previously_collected;
+//}
+
+
+template <typename FilterFunction>
+std::vector <std::string> names_for_fold (
+        const vector <Person> people,
+        FilterFunction filter)
+{
+    auto append_name_if  = [=]  (
+            std::vector<std::string> previously_collected,
+            const Person &person)
+    {
+        if (filter (person)) {
+            previously_collected.push_back(name(person));
+        }
+        return previously_collected;
+    };
+    return std::accumulate(people.cbegin(), people.cend(), std::vector<std::string> {}, append_name_if);
+}
 void print (const vector <Person> &v);
 void print (const vector <string> &v);
 
@@ -111,6 +140,10 @@ int main() {
     std::cout <<"\nTail Call\n";
     auto vecFemalesX = names_for_tail(people.begin(), people.end(), is_female);
     print (vecFemalesX);
+
+    std::cout << "\nUsing std::accumulate\n";
+    auto vecMalesY = names_for_fold(people, is_not_female);
+    print(vecMalesY);
     return 0;
 
 }
